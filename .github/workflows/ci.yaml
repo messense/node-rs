@@ -38,12 +38,30 @@ jobs:
             target: 'i686-pc-windows-msvc'
           - host: ubuntu-latest
             target: 'x86_64-unknown-linux-gnu'
-            docker: ghcr.io/napi-rs/napi-rs/nodejs-rust:lts-debian
+            docker: messense/manylinux2014-cross:x86_64
             # Node.js in Baidu need to compatible with `GLIBC_2.12`
             build: >-
-              set -e &&
-              rustup toolchain install $(cat ./rust-toolchain) &&
+              set -e && 
+
+              curl https://sh.rustup.rs -sSf | sh -s -- --default-toolchain $(cat ./rust-toolchain) -y &&
+              export PATH=$HOME/.cargo/bin:$PATH &&
               rustup target add x86_64-unknown-linux-gnu &&
+
+              NODE_VERSION=16.14.2 &&
+              ARCH=linux-x64 &&
+              curl -fsSLO --compressed "https://nodejs.org/dist/v$NODE_VERSION/node-v$NODE_VERSION-$ARCH.tar.xz" &&
+              tar -xJf "node-v$NODE_VERSION-$ARCH.tar.xz" -C /usr/local --strip-components=1 --no-same-owner &&
+              rm "node-v$NODE_VERSION-$ARCH.tar.xz" &&
+              ln -s /usr/local/bin/node /usr/local/bin/nodejs &&
+
+              YARN_VERSION=1.22.18 &&
+              curl -fsSLO --compressed "https://yarnpkg.com/downloads/$YARN_VERSION/yarn-v$YARN_VERSION.tar.gz" &&
+              mkdir -p /opt &&
+              tar -xzf yarn-v$YARN_VERSION.tar.gz -C /opt/ &&
+              ln -s /opt/yarn-v$YARN_VERSION/bin/yarn /usr/local/bin/yarn &&
+              ln -s /opt/yarn-v$YARN_VERSION/bin/yarnpkg /usr/local/bin/yarnpkg &&
+              rm yarn-v$YARN_VERSION.tar.gz &&
+
               yarn lerna exec "yarn build --target x86_64-unknown-linux-gnu" --concurrency 1 --stream --no-prefix &&
               strip -x packages/*/*.node
           - host: ubuntu-latest
