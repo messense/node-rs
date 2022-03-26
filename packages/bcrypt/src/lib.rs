@@ -1,9 +1,6 @@
 #![deny(clippy::all)]
 #![allow(dead_code)]
 
-/// Explicit extern crate to use allocator.
-extern crate global_alloc;
-
 use std::str::FromStr;
 
 use napi::bindgen_prelude::*;

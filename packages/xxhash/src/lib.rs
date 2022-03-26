@@ -1,9 +1,6 @@
 #![deny(clippy::all)]
 #![allow(dead_code)]
 
-/// Explicit extern crate to use allocator.
-extern crate global_alloc;
-
 use napi::bindgen_prelude::*;
 use napi_derive::napi;
 use xxhash_rust::{xxh32, xxh64};

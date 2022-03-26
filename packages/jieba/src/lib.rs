@@ -1,9 +1,6 @@
 #![deny(clippy::all)]
 #![allow(clippy::nonstandard_macro_braces)]
 
-/// Explicit extern crate to use allocator.
-extern crate global_alloc;
-
 use std::str;
 
 use jieba_rs::{Jieba, KeywordExtract, TFIDF};
