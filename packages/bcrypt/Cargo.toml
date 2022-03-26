@@ -10,7 +10,6 @@ crate-type = ["cdylib"]
 [dependencies]
 bcrypt = "0.12"
 blowfish = { version = "0.9", features = ["bcrypt"] }
-global_alloc = { path = "../../crates/alloc" }
 napi = { version = "2", default-features = false, features = ["napi3"] }
 napi-derive = { version = "2" }
 getrandom = "0.2"

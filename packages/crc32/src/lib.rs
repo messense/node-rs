@@ -1,8 +1,5 @@
 #![deny(clippy::all)]
 
-/// Explicit extern crate to use allocator.
-extern crate global_alloc;
-
 use crc32c::crc32c_append;
 use crc32fast::Hasher;
 use napi::bindgen_prelude::{Buffer, Either};

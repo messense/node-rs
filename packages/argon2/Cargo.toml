@@ -9,7 +9,6 @@ crate-type = ["cdylib"]
 [dependencies]
 argon2 = { version = "0.4", features = ["parallel"] }
 napi = { version = "2", default-features = false, features = ["napi3"] }
-global_alloc = { path = "../../crates/alloc" }
 napi-derive = { version = "2", default-features = false, features = [
   "type-def",
 ] }
